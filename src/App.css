@@ -1,38 +1,172 @@
-.App {
-  text-align: center;
+* {
+  
+  margin: 0px;
+  padding: 0px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+header {
+  width: 50vw;
+  height: 12vh;
+  background-color: #C4C4C4;
+  border-radius: 13px;
+  text-align: center;
+  padding: 10px;
+  margin-top: 1vh;
+  font-size: 23px;
+}
+
+.search-filter-container {
+  height: 5vh;
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+
+.searchBox {
+  border-style: none;
+  border-radius: 13px;
+  border: 1px solid grey;
+  width: 330px;
+  height: 30px;
+  padding-left: 13px;
+}
+.sortBox {
+  border-style: none;
+  border-radius: 13px;
+  border: 1px solid grey;
+  width: 130px;
+  height: 30px;
+  padding: 0px 13px;
+}
+
+.stocks-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 450px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 2vh;
+  overflow-y: auto;
+}
+
+.stock{
+  display: flex;
+  background-color: #E0E0E0;
+  border-radius: 13px;
+  width: 500px;
+  height: 100px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  padding: 0px 10px;
+  transition: all 0.5s;
+}
+
+.name-price-change-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  width: auto;
+}
+
+.price-change-container {
+  display: flex;
+  height: 20px;
+  width: 130px;
+  justify-content: space-between;
+  margin: 3px 0px;
+}
+.price {
+  font-weight: 500;
+}
+.change {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.buy-sell-btn-container {
+  display: flex;
+  text-align: center;
+  line-height: 25px;
+}
+
+.circle-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+  margin: 5px;
+}
+
+.buy {
+  border: 4px solid green;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.buy:active {
+  background-color: green;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.sell {
+  border: 4px solid red;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.boughtStock {
+  background-color: #A2ED88;
+}
+
+.removeStock {
+ height: 30px;
+ width: 30px;
+ border-radius: 18px;
+ text-align: center;
+ line-height: 30px;
+ display: none;
+ font-size: 30px;
+ cursor: pointer;
+}
+.removeStock:hover {
+  background-color: #C4C4C4;
+}
+
+
+.portfolio-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.portfolio-net-change {
+  width: 100px;
+  line-height: 50px;
+  text-align: end;
+}
+
+.table-heading{
+  text-align: left;
+  font-weight: 700;
+  margin: 2px 5px;
+  width: 100px;
+}
+
+.table-row , .portfolio-header{
+  display: flex;
+  width: 400px;
+}
+
+.table-data {
+  margin: 2px 5px;
+  width: 100px;
 }
