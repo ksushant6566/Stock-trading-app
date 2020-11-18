@@ -70,7 +70,7 @@ const Provider = ({ children }) => {
     useEffect(() => {
         setInterval(() => {
             getStocksList();
-        }, 6000)
+        }, 5 * 60 * 1000)
     }, [])
 
     useEffect(() => {
