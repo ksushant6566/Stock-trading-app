@@ -9,13 +9,13 @@ const Provider = ({ children }) => {
     const [stocksList, setStocksList] = useState([]);
     const [portfolio, setPortfolio] = useState([]);
     const [portfolioNetChange, setPortfolioNetChange] = useState(0);
-    const [stockSymbols, setStockSymbols] = useState([
+    const stockSymbols = [
         'AAPL','ISRG','CME', 'ADP', 'INTU', 'BKNG',
         'FISV', 'MDLZ', 'GILD', 'QCOM', 'SBUX', 'CHTR', 'TXN',
         'AVGO', 'AMGN', 'COST', 'PYPL', 
         'NFLX', 'ADBE', 'NVDA',
         'PEP' , 'CMCSA', 'INTC', 'FB', 'MSFT', 'AMZN'
-    ])
+    ]
 
     const addToPortfolio = (stock) => {
         const boughtStock = {
@@ -47,7 +47,7 @@ const Provider = ({ children }) => {
             })
             )
             .then(res => {
-                res.map(item => {
+                res.forEach(item => {
                     newstocksList.push({
                         name: item.data.companyName,
                         price: item.data.latestPrice,
@@ -64,7 +64,7 @@ const Provider = ({ children }) => {
             
             const list = await getList()
             setStocksList(list);
-            console.log("fired !")
+            // console.log("fired !")
     }
 
     useEffect(() => {
@@ -78,7 +78,7 @@ const Provider = ({ children }) => {
         let totalCurrentPrice = 0;
         let totalBoughtPrice = 0;
 
-        portfolio.map(stock => {
+        portfolio.forEach(stock => {
             let idx = 0;
 
             for(let i=0; i <stocksList.length; i++) {
