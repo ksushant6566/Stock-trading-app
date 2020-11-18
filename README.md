@@ -1,6 +1,11 @@
 ### Welcome , it's a stock trading/watching web app made with React js
 #### It uses https://iexcloud.io/docs/api/#quote Api for data.
 
+#### check live version here https://sushant-stock-trading.netlify.app/
+#### happy trading !
+
+![image](https://github.com/ksushant6566/Stock-trading-app/blob/main/Screenshot%20(6).png)
+![image](https://github.com/ksushant6566/Stock-trading-app/blob/main/Screenshot%20(7).png)
 
 # Getting Started with Create React App
 
