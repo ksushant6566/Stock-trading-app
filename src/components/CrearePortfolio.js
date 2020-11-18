@@ -3,8 +3,6 @@ import { Context } from '../context/context';
 
 
 const CreatePortfolio = () => {
-    const [searchValue, setSearchValue] = useState('');
-    
     const { getStocksList,
             stocksList , 
             addToPortfolio, 
@@ -85,7 +83,7 @@ const CreatePortfolio = () => {
                         return (
                             <div key={count++} className="stock">
                                 <div className="logo">
-                                    <img src={item.imageUrl} ></img>
+                                    <img src={item.imageUrl} alt="img" ></img>
                                 </div>
                                 <div className="name-price-change-container">
                                     <h3>{item.name}</h3>
