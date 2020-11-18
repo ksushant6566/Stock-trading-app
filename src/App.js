@@ -1,17 +1,19 @@
-import React, { useContext, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useContext, useEffect, useState } from 'react';
 import './App.css';
 import CreatePortfolio from './components/CrearePortfolio';
 import Portfolio from './components/Portfolio';
-import { Context } from './context/context.js'
 
 function App() {
 
   return (
+
     <div className="App">
-      <Portfolio />
+      
       <CreatePortfolio />
+      <Portfolio />
+      
     </div>
+
   );
 }
 

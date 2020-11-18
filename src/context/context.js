@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
@@ -7,12 +7,15 @@ const Context = React.createContext();
 const Provider = ({ children }) => {
 
     const [stocksList, setStocksList] = useState([]);
-    
     const [portfolio, setPortfolio] = useState([]);
-
-    // useEffect(() => {
-    //     getStocksList
-    // })
+    const [portfolioNetChange, setPortfolioNetChange] = useState(0);
+    const [stockSymbols, setStockSymbols] = useState([
+        'AAPL','ISRG','CME', 'ADP', 'INTU', 'BKNG',
+        'FISV', 'MDLZ', 'GILD', 'QCOM', 'SBUX', 'CHTR', 'TXN',
+        'AVGO', 'AMGN', 'COST', 'PYPL', 
+        'NFLX', 'ADBE', 'NVDA',
+        'PEP' , 'CMCSA', 'INTC', 'FB', 'MSFT', 'AMZN'
+    ])
 
     const addToPortfolio = (stock) => {
         const boughtStock = {
@@ -24,141 +27,92 @@ const Provider = ({ children }) => {
         updatedPortfolio.push(boughtStock)
 
         setPortfolio(updatedPortfolio)
-        console.log(portfolio);
+        // console.log(portfolio);
     }
     
 
     const removeFromPortfolio = (stock) => {
-        const updatedPortfolio = portfolio.filter(item => item.name != stock.name)
+        const updatedPortfolio = portfolio.filter(item => item.name !== stock.name)
         setPortfolio(updatedPortfolio)
     }
     
-    const getStocksList = ()=> {
+    const getList = async () => {
+        const newstocksList = [];
 
-        setStocksList([
-            {
-                name : "amazon",
-                price : 1234
-            },
-            {
-                name : "apple",
-                price : 1324
-            },
-            {
-                name : "microsoft",
-                price : 1234
-            },
-            {
-                name : "tcs",
-                price : 1324
-            },
-            {
-                name : "reliance",
-                price : 1234
-            },
-            {
-                name : "netflix",
-                price : 1324
-            },
-            {
-                name : "sco",
-                price : 1234
-            },
-            {
-                name : "google",
-                price : 1324
-            },
-            {
-                name : "haldiram",
-                price : 1234
-            },
-            {
-                name : "Eu",
-                price : 1324
-            },
-            {
-                name : "Jabong",
-                price : 1234
-            },
-            {
-                name : "xiomi",
-                price : 1324
-            },
-            {
-                name : "growmore",
-                price : 1234
-            },
-            {
-                name : "laponez",
-                price : 1324
-            },
-            {
-                name : "burger king",
-                price : 1234
-            },
-            {
-                name : "adobe",
-                price : 1324
-            },
-            {
-                name : "goldman sachs",
-                price : 1234
-            },
-            {
-                name : "bloomberg",
-                price : 1324
-            },
-            {
-                name : "ZS",
-                price : 1234
-            },
-            {
-                name : "Interviewbit",
-                price : 1324
-            },
-            {
-                name : "uber",
-                price : 1234
-            },
-            {
-                name : "zomato",
-                price : 1324
-            },
-            {
-                name : "ola",
-                price : 1234
-            },
-            {
-                name : "tower research",
-                price : 1324
-            },
-            
-        ])
+        await Promise.all(
+            stockSymbols.map(symbol => {
+                return new Promise((resolve, reject) => {
+                    resolve(axios(`https://cloud.iexapis.com/stable/stock/${symbol}/quote/?&token=pk_9c4d6fe742e54aae900f381f4400be7c`))
+                })
+            })
+            )
+            .then(res => {
+                res.map(item => {
+                    newstocksList.push({
+                        name: item.data.companyName,
+                        price: item.data.latestPrice,
+                        change: item.data.changePercent,
+                        imageUrl: `https://storage.googleapis.com/iex/api/logos/${item.data.symbol}.png`
+                    })
+                })
+            })
+        
+        return newstocksList;
+    }
 
-        console.log(stocksList);
+    const getStocksList = async ()=> {
+            const list = await getList()
+            setStocksList(list);
+    }
 
-
-        // const options = {
-        //     method: 'GET',
-        //     url: 'https://twelve-data1.p.rapidapi.com/price',
-        //     params: {symbol: 'AMZN', outputsize: '30', format: 'json'},
-        //     headers: {
-        //       'x-rapidapi-key': '3afdcd09bfmsh4b12c2eb925d608p1faf6bjsn8e511fd6ea96',
-        //       'x-rapidapi-host': 'twelve-data1.p.rapidapi.com'
-        //     }
-        //   };
-          
-        //   axios.request(options).then(function (response) {
-        //       console.log(response.data);
-        //   }).catch(function (error) {
-        //       console.error(error);
-        //   })
+    const sortByName  = () => {
+        const sortedSymbols = Array.from(stockSymbols).sort((a, b) => {
+            return a > b ? 1 : -1
+        })
+        setStockSymbols( sortedSymbols )
+        
+        console.log(stockSymbols)
     }
 
 
+    useEffect(() => {
+        setInterval(() => {
+            getStocksList();
+        }, 5*60000)
+    }, [])
+
+    useEffect(() => {
+        const updatedPortfolio = [];
+        let totalCurrentPrice = 0;
+        let totalBoughtPrice = 0;
+
+        portfolio.map(stock => {
+            let idx = 0;
+
+            for(let i=0; i <stocksList.length; i++) {
+                if(stocksList[i].name === stock.name) {
+                    idx = i;
+                    break;
+                }
+            }
+
+            updatedPortfolio.push({
+                ...stock,
+                currentPrice: stocksList[idx].price
+            })
+
+            totalBoughtPrice += updatedPortfolio[updatedPortfolio.length-1].boughtPrice ;
+            totalCurrentPrice += updatedPortfolio[updatedPortfolio.length-1].currentPrice ; 
+
+        })
+
+        setPortfolioNetChange( ((totalCurrentPrice-totalBoughtPrice)/totalBoughtPrice).toFixed(4) );
+        setPortfolio(updatedPortfolio)
+    }, [stocksList])
+
     return (
         <Context.Provider value={{
-            getStocksList, stocksList, addToPortfolio, portfolio, setPortfolio, removeFromPortfolio
+            getStocksList, stocksList, addToPortfolio, portfolio, setPortfolio, removeFromPortfolio, portfolioNetChange, sortByName, stockSymbols
         }}> {children} </Context.Provider>
     )
 }

@@ -3,7 +3,38 @@
   margin: 0px;
   padding: 0px;
 }
+h1{
+  margin: 15px;
+}
 
+nav {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  height: 450px;
+  width: 150px;
+  padding: 10px;
+  margin-left: 10px;
+  background-color: #C4C4C4;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50vh;
+  transform: translateY(-225px);
+}
+
+button {
+  width: 150px;
+  height: 45px;
+  border: none;
+  border-radius: 13px;
+  margin: 10px 10px;
+  transition: all 0.5s;
+}
+
+button:hover {
+  background-color: aqua;
+}
 
 .container {
   display: flex;
@@ -14,7 +45,7 @@
 
 header {
   width: 50vw;
-  height: 12vh;
+  height: 8vh;
   background-color: #C4C4C4;
   border-radius: 13px;
   text-align: center;
@@ -67,18 +98,24 @@ header {
   border-radius: 13px;
   width: 500px;
   height: 100px;
-  justify-content: space-between;
+  /* justify-content: flex-start; */
   align-items: center;
   margin: 10px;
   padding: 0px 10px;
-  transition: all 0.5s;
+  transition: all 0.2s;
+}
+
+.logo img{
+  border-radius: 28px;
+  height: 55px;
+  width: 55px;
 }
 
 .name-price-change-container {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  width: auto;
+  width: 290px;
 }
 
 .price-change-container {
@@ -97,6 +134,7 @@ header {
 }
 
 .buy-sell-btn-container {
+  margin-left: 30px;
   display: flex;
   text-align: center;
   line-height: 25px;
@@ -136,21 +174,67 @@ header {
  display: none;
  font-size: 30px;
  cursor: pointer;
+ margin-left: 60px;
 }
 .removeStock:hover {
   background-color: #C4C4C4;
 }
 
-
+.portfolio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  height: 600px;
+  width: 85vw;
+  transition: all 0.6s;
+  top: 1vh;
+  transform: translateX(-80vw);
+  border: solid black 2px;
+  border-radius: 18px;
+  background-color: #eeeeee;
+}
+.portfolio-change {
+  transform: translateX(5vw)
+}
 .portfolio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+  height: 80%;
+  padding: 25px 0px;
+}
+
+.portfolio-control-btn {
+  width: 40px;
+  height: 150px;
+  transform: translateX(18vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
+
+.portfolio-control-btn .bar1 {
+  background-color: black;
+  height: 35px;
+  width: 5px;
+  transform: rotateZ(45deg);
+  margin: -13px 0px;
+}
+.portfolio-control-btn .bar2 {
+  background-color: black;
+  height: 35px;
+  width: 5px;
+  transform: rotateZ(-45deg);
+}
+
 .portfolio-net-change {
   width: 100px;
-  line-height: 50px;
+  line-height: 73px;
   text-align: end;
 }
 
@@ -158,15 +242,24 @@ header {
   text-align: left;
   font-weight: 700;
   margin: 2px 5px;
-  width: 100px;
+  width: 150px;
 }
 
-.table-row , .portfolio-header{
+.portfolio-header{
   display: flex;
-  width: 400px;
+  width: 600px;
+}
+.table-row {
+  display: flex;
+  width: 600px;
+  margin-bottom: 15px;
+  padding: 5px 0px;
+  border-bottom: grey 2px solid;
+  justify-content: baseline;
+  align-items: flex-end;
 }
 
 .table-data {
   margin: 2px 5px;
-  width: 100px;
+  width: 150px;
 }

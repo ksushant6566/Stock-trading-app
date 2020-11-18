@@ -1,35 +1,63 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { Context } from '../context/context';
 
 
 const CreatePortfolio = () => {
     const [searchValue, setSearchValue] = useState('');
     const [sortParameter, setSortParameter] = useState('sort name');
-    const { getStocksList, stocksList , addToPortfolio, portfolio, removeFromPortfolio} = useContext(Context);
+    const { getStocksList, stocksList , addToPortfolio, portfolio, removeFromPortfolio, sortByName, stockSymbols} = useContext(Context);
 
     
 
     useEffect(() => {
         getStocksList();
-
+        
         // axios('https://finnhub.io/api/v1/quote?symbol=AAPL&token=bupb4jf48v6sjkjj00ig')
         // .then(res => console.log(res.data))
         // .catch(err => console.log(err))
 
-    }, [])
+    }, [stockSymbols])
+
+    // useEffect(() => {
+    //     portfolio.map(item => {
+    //         let i = 0;
+    //         for(i; i < stocksList.length; i++) {
+    //             if(stocksList[i].name === item.name ) 
+    //                 break;
+    //         }
+
+    //         const boughtStock = document.getElementsByClassName('stock')[i];
+    //         boughtStock.classList.add("boughtStock")
+    
+    //         boughtStock.childNodes[2].style.display = 'none';
+    //         boughtStock.childNodes[3].style.display = 'block';
+
+    //         console.log("fired")
+    //     })
+    // })
+
+    useEffect(() => {
+        if(sortParameter === "sort name") {
+            sortByName();
+        }else {
+            console.log("will do that in a bit")
+        }
+    }, [sortParameter])
 
 
     const handleBuy = (stock) => {
-        addToPortfolio(stock);
-        
-        const idx = stocksList.indexOf(stock)
+        if(portfolio.length < 10) {
+            addToPortfolio(stock);
+            
+            const idx = stocksList.indexOf(stock)
+    
+            const boughtStock = document.getElementsByClassName('stock')[idx];
+            boughtStock.classList.add("boughtStock")
+    
+            boughtStock.childNodes[2].style.display = 'none';
+            boughtStock.childNodes[3].style.display = 'block';
+        }
 
-        const boughtStock = document.getElementsByClassName('stock')[idx];
-        boughtStock.classList.add("boughtStock")
-
-        boughtStock.childNodes[1].style.display = 'none';
-        boughtStock.childNodes[2].style.display = 'block';
     }
 
     const handleRemove = (stock) => {
@@ -40,8 +68,8 @@ const CreatePortfolio = () => {
         const boughtStock = document.getElementsByClassName('stock')[idx];
         boughtStock.classList.remove("boughtStock")
 
-        boughtStock.childNodes[1].style.display = 'flex';
-        boughtStock.childNodes[2].style.display = 'none';
+        boughtStock.childNodes[2].style.display = 'flex';
+        boughtStock.childNodes[3].style.display = 'none';
         
         // console.log(portfolio);
     }
@@ -70,8 +98,8 @@ const CreatePortfolio = () => {
                     value={sortParameter}
                     onChange={(e) => setSortParameter(e.target.value)}
                 >
-                    <option>sort price</option>
-                    <option>sort name</option>
+                    <option value="sort price" >sort by price</option>
+                    <option value="sort name" >sort by name</option>
                 </select>
             </div>
 
@@ -80,12 +108,15 @@ const CreatePortfolio = () => {
                     stocksList.map(item => {
                         return (
                             <div key={count++} className="stock">
+                                <div className="logo">
+                                    <img src={item.imageUrl} ></img>
+                                </div>
                                 <div className="name-price-change-container">
                                     <h3>{item.name}</h3>
                                     <p>sector</p>
                                     <div className="price-change-container">
                                         <span className="price">${item.price}</span> |
-                                        <span className="change">%change</span>
+                                        <span className="change">{item.change}%</span>
                                     </div>
                                 </div>
                                 
