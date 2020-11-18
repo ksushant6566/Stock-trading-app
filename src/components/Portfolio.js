@@ -17,6 +17,8 @@ const Portfolio = () => {
             element.classList.add('portfolio-change');
     }
 
+    let count = 0;
+
     return (
         <div className="portfolio">
             <div className='portfolio-container'>
@@ -36,7 +38,7 @@ const Portfolio = () => {
 
                         {portfolio.map(item => {
                             return (
-                                <div className="table-row">
+                                <div key={count++} className="table-row">
                                     <div className="table-data">{item.name}</div>
                                     <div className="table-data">{item.boughtPrice}</div>
                                     <div className="table-data">{item.currentPrice}</div>
