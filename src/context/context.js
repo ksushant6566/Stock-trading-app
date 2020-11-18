@@ -61,24 +61,16 @@ const Provider = ({ children }) => {
     }
 
     const getStocksList = async ()=> {
+            
             const list = await getList()
             setStocksList(list);
+            console.log("fired !")
     }
-
-    const sortByName  = () => {
-        const sortedSymbols = Array.from(stockSymbols).sort((a, b) => {
-            return a > b ? 1 : -1
-        })
-        setStockSymbols( sortedSymbols )
-        
-        console.log(stockSymbols)
-    }
-
 
     useEffect(() => {
         setInterval(() => {
             getStocksList();
-        }, 5*60000)
+        }, 6000)
     }, [])
 
     useEffect(() => {
@@ -112,7 +104,8 @@ const Provider = ({ children }) => {
 
     return (
         <Context.Provider value={{
-            getStocksList, stocksList, addToPortfolio, portfolio, setPortfolio, removeFromPortfolio, portfolioNetChange, sortByName, stockSymbols
+            getStocksList, stocksList, addToPortfolio, portfolio, setPortfolio, removeFromPortfolio,
+             portfolioNetChange ,stockSymbols,
         }}> {children} </Context.Provider>
     )
 }

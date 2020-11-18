@@ -4,8 +4,13 @@ import { Context } from '../context/context';
 
 const CreatePortfolio = () => {
     const [searchValue, setSearchValue] = useState('');
-    const [sortParameter, setSortParameter] = useState('sort name');
-    const { getStocksList, stocksList , addToPortfolio, portfolio, removeFromPortfolio, sortByName, stockSymbols} = useContext(Context);
+    
+    const { getStocksList,
+            stocksList , 
+            addToPortfolio, 
+            portfolio, 
+            removeFromPortfolio, 
+        } = useContext(Context);
 
     
 
@@ -16,7 +21,7 @@ const CreatePortfolio = () => {
         // .then(res => console.log(res.data))
         // .catch(err => console.log(err))
 
-    }, [stockSymbols])
+    }, [])
 
     // useEffect(() => {
     //     portfolio.map(item => {
@@ -35,15 +40,6 @@ const CreatePortfolio = () => {
     //         console.log("fired")
     //     })
     // })
-
-    useEffect(() => {
-        if(sortParameter === "sort name") {
-            sortByName();
-        }else {
-            console.log("will do that in a bit")
-        }
-    }, [sortParameter])
-
 
     const handleBuy = (stock) => {
         if(portfolio.length < 10) {
@@ -82,26 +78,6 @@ const CreatePortfolio = () => {
             <header className="position-fixed">
                 You can select upto 10 stocks from the list to create a portfolio
             </header>
-
-            <div className="search-filter-container position-fixed"> 
-                <input 
-                    className="searchBox"
-                    type="text"
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    placeholder="Search"
-                ></input>
-
-                <select 
-                    className="sortBox"
-                    type="text"
-                    value={sortParameter}
-                    onChange={(e) => setSortParameter(e.target.value)}
-                >
-                    <option value="sort price" >sort by price</option>
-                    <option value="sort name" >sort by name</option>
-                </select>
-            </div>
 
             <div className="stocks-container">
                 {
