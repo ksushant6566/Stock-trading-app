@@ -1,3 +1,7 @@
+### Welcome , it's a stock trading/watching web app made with React js
+#### It uses https://iexcloud.io/docs/api/#quote Api for data.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
